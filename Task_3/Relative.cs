@@ -13,8 +13,7 @@ namespace Task_3
         public string Name { get; }
         public DateTime DateOfBirth { get; }
 
-
-        public int[] ancestors = new int[2];
+        public List<int> ancestors = new List<int>();
         public List<int> descendants = new List<int>();
 
         public Relative(int id, string name, DateTime dateOfBirth)

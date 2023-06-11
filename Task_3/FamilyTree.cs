@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Task_3
 {
-    internal class FamilyTree : IList
+    internal class FamilyTree : IList<Relative>
     {
 
         Relative[] relatives = new Relative[0];
@@ -16,69 +16,66 @@ namespace Task_3
         public int Count { get { return relatives.Length; } }
 
 
-        public object this[int index]
+        public Relative this[int index]
         {
             get { return relatives[index]; }
-            set { relatives[index] = value as Relative; }
+            set { relatives[index] = value; }
+        }
+        public Relative this[string name]
+        {
+            get 
+            {
+                foreach (var item in relatives)
+                {
+                    if (item.Name == name)
+                    {
+                        return item;
+                    }
+                }
+
+                return null;
+            }
+            
         }
 
-        public int Add(object obj)
+
+
+        public void Add(Relative obj)
         {
-            if (obj is Relative)
-            {
-                Relative newEle = (Relative)obj;
-
-                Array.Resize(ref relatives, relatives.Length + 1);
-                relatives[relatives.Length - 1] = newEle;
-                return relatives.Length -1;
-            }
-
-            return -1;
+            Array.Resize(ref relatives, relatives.Length + 1);
+            relatives[relatives.Length - 1] = obj;
         }
         public void Clear()
         {
             relatives = new Relative[0];
         }
-        public bool Contains(object value)
+        public bool Contains(Relative value)
         {
-            if (value is Relative)
+            foreach (var item in relatives)
             {
-                Relative ele = (Relative)value;
-
-                foreach (var item in relatives)
-                {
-                    if (item.Name == ele.Name)
-                        return true;
-
-                }
+                if (item.Name == value.Name)
+                    return true;
             }
+
             return false;
         }
-        public int IndexOf(object value)
+        public int IndexOf(Relative value)
         {
-            if (value is Relative)
-            {
-                Relative relative = (Relative)value;
+            for (int i = 0; i < Count; i++)
+                if (relatives[i].Name == value.Name)
+                    return i;
 
-                for (int i = 0; i < Count; i++)
-                    if (relatives[i].Name == relative.Name)
-                        return i;
-            }
             return -1;
         }
-        public void Insert(int index, object value)
+        public void Insert(int index, Relative value)
         {
-            Relative rel = value as Relative;
-
             if ((index >= 0) && (index < Count))
-            {
-                relatives[index] = rel;
-            }
+                relatives[index] = value;
         }
 
 
 
-        public void CopyTo(Array array, int arrayIndex)
+        public void CopyTo(Relative[] array, int arrayIndex)
         {
 
         }
@@ -95,9 +92,9 @@ namespace Task_3
         //   T:System.NotSupportedException:
         //     Объект System.Collections.IList доступен только для чтения. или - System.Collections.IList
         //     имеет фиксированный размер.
-        public void Remove(object value)
+        public bool Remove(Relative value)
         {
-
+            return false;
         }
 
         //
@@ -137,12 +134,16 @@ namespace Task_3
         {
             get { return null; }
         }
+
+
+        public IEnumerator<Relative> GetEnumerator()
+        {
+            return ((IEnumerable<Relative>)relatives).GetEnumerator();
+        }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
-            foreach (var item in relatives)
-            {
-                yield return item;
-            }
+            return (this as IEnumerable<Relative>).GetEnumerator();
         }
 
     }
