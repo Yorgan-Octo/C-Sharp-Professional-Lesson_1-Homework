@@ -79,43 +79,20 @@ namespace Task_3
         {
 
         }
-
-        //
         // Сводка:
         //     Удаляет первое вхождение указанного объекта из коллекции System.Collections.IList.
-        //
-        // Параметры:
-        //   value:
-        //     Объект, который необходимо удалить из коллекции System.Collections.IList.
-        //
-        // Исключения:
-        //   T:System.NotSupportedException:
-        //     Объект System.Collections.IList доступен только для чтения. или - System.Collections.IList
-        //     имеет фиксированный размер.
         public bool Remove(Relative value)
         {
             return false;
         }
-
-        //
         // Сводка:
         //     Удаляет элемент System.Collections.IList, расположенный по указанному индексу.
-        //
-        // Параметры:
-        //   index:
-        //     Отсчитываемый от нуля индекс удаляемого элемента.
-        //
-        // Исключения:
-        //   T:System.ArgumentOutOfRangeException:
-        //     index не является допустимым индексом в System.Collections.IList.
-        //
-        //   T:System.NotSupportedException:
-        //     Объект System.Collections.IList доступен только для чтения. или - System.Collections.IList
-        //     имеет фиксированный размер.
         public void RemoveAt(int index)
         {
 
         }
+
+
 
 
         public bool IsFixedSize
@@ -136,6 +113,23 @@ namespace Task_3
         }
 
 
+
+
+        public IEnumerable SearchYearOfBirth(DateTime year)
+        {
+            List<Relative> res = new List<Relative>();
+            foreach (var item in relatives)
+            {
+                item.SearchYear(year, ref res);
+            }
+
+
+            return res;
+        }
+
+
+
+
         public IEnumerator<Relative> GetEnumerator()
         {
             return ((IEnumerable<Relative>)relatives).GetEnumerator();
@@ -145,6 +139,7 @@ namespace Task_3
         {
             return (this as IEnumerable<Relative>).GetEnumerator();
         }
+
 
     }
 }

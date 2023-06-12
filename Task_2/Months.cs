@@ -11,7 +11,6 @@ namespace Task_2
         public int Id { get; }
         public string Name { get; }
         public int AmountOfDays { get; }
-
         public Months(int id, string name, int amountOfDays)
         {
             Id = id;

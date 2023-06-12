@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,22 +9,46 @@ namespace Task_3
 {
     internal class Relative
     {
-
-        public int Id { get; }
         public string Name { get; }
         public DateTime DateOfBirth { get; }
-
-        public List<int> ancestors = new List<int>();
-        public List<int> descendants = new List<int>();
-
-        public Relative(int id, string name, DateTime dateOfBirth)
+        public List<Relative> сhildren = new List<Relative>();
+        public Relative(string name, DateTime dateOfBirth)
         {
             this.Name = name;
             this.DateOfBirth = dateOfBirth;
-            this.Id = id;
         }
 
+        public void AddChildren(Relative chil)
+        {
+            сhildren.Add(chil);
+        }
+        public void PrintFamilyTree(string iner = "- ")
+        {
+            Console.WriteLine($"{iner}{Name} {DateOfBirth.Year}р");
+            foreach (var child in сhildren)
+            {
+                child.PrintFamilyTree("    " + iner);
+            }
+        }
 
+        public void SearchYear(DateTime year, ref List<Relative> res)
+        {
+
+            if (DateOfBirth.Year == year.Year)
+            {
+                res.Add(this);
+            }
+
+            foreach (var item in сhildren)
+            {
+                if (item.DateOfBirth.Year == year.Year)
+                {
+                    //res.Add(item);
+                    item.SearchYear(year, ref res);
+                }
+            }
+
+        }
 
     }
 }

@@ -9,7 +9,6 @@ namespace Task_2
 {
     internal class MonthCollection : ICollection //так як колекція не змінюется я вирішив що ICollection буде краще
     {
-
         Months[] months = new Months[12]
         {
             new Months(1, "Январь", 31),
@@ -25,7 +24,6 @@ namespace Task_2
             new Months(11, "Ноябрь", 30),
             new Months(12, "Декабрь", 31)
         };
-
         public int Count => months.Length;
         public string this[int index]
         {
@@ -49,7 +47,6 @@ namespace Task_2
                 arr[index++] = months[i];
             }
         }
-
         public bool IsSynchronized { get { return false; } }
         public object SyncRoot { get { return this; } }
         public IEnumerable SearchDaysInMonth(int day)
