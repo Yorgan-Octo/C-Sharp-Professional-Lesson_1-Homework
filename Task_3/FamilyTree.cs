@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace Task_3
         }
         public Relative this[string name]
         {
-            get 
+            get
             {
                 foreach (var item in relatives)
                 {
@@ -35,7 +36,7 @@ namespace Task_3
 
                 return null;
             }
-            
+
         }
 
 
@@ -77,23 +78,36 @@ namespace Task_3
 
         public void CopyTo(Relative[] array, int arrayIndex)
         {
-
+            int j = arrayIndex;
+            for (int i = 0; i < array.Length; i++)
+            {
+                array.SetValue(relatives[i], j);
+                j++;
+            }
         }
-        // Сводка:
-        //     Удаляет первое вхождение указанного объекта из коллекции System.Collections.IList.
+
         public bool Remove(Relative value)
         {
+            foreach (var item in relatives)
+            {
+                if (item == value)
+                {
+                    RemoveAt(IndexOf(value));
+                    return true;
+
+                }
+            }
             return false;
+
         }
-        // Сводка:
-        //     Удаляет элемент System.Collections.IList, расположенный по указанному индексу.
         public void RemoveAt(int index)
         {
-
+            if ((index >= 0) && (index < relatives.Length))
+            {
+                for (int i = index; i < relatives.Length - 1; i++)
+                    relatives[i] = relatives[i + 1];
+            }
         }
-
-
-
 
         public bool IsFixedSize
         {
@@ -111,10 +125,6 @@ namespace Task_3
         {
             get { return null; }
         }
-
-
-
-
         public IEnumerable SearchYearOfBirth(DateTime year)
         {
             List<Relative> res = new List<Relative>();
@@ -122,13 +132,8 @@ namespace Task_3
             {
                 item.SearchYear(year, ref res);
             }
-
-
             return res;
         }
-
-
-
 
         public IEnumerator<Relative> GetEnumerator()
         {
